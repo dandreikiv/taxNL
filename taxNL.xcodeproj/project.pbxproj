@@ -13,6 +13,7 @@
 		85A89F5A1D1C5B14005F5A28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A89F591D1C5B14005F5A28 /* Assets.xcassets */; };
 		85A89F5D1D1C5B14005F5A28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85A89F5B1D1C5B14005F5A28 /* LaunchScreen.storyboard */; };
 		85A89F681D1C5B14005F5A28 /* taxNLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A89F671D1C5B14005F5A28 /* taxNLTests.swift */; };
+		85A89F731D1C5EB3005F5A28 /* TaxCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A89F721D1C5EB3005F5A28 /* TaxCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		85A89F631D1C5B14005F5A28 /* taxNLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = taxNLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A89F671D1C5B14005F5A28 /* taxNLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = taxNLTests.swift; sourceTree = "<group>"; };
 		85A89F691D1C5B14005F5A28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85A89F721D1C5EB3005F5A28 /* TaxCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaxCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				85A89F521D1C5B14005F5A28 /* AppDelegate.swift */,
 				85A89F541D1C5B14005F5A28 /* ViewController.swift */,
+				85A89F721D1C5EB3005F5A28 /* TaxCalculator.swift */,
 				85A89F561D1C5B14005F5A28 /* Main.storyboard */,
 				85A89F591D1C5B14005F5A28 /* Assets.xcassets */,
 				85A89F5B1D1C5B14005F5A28 /* LaunchScreen.storyboard */,
@@ -199,6 +202,7 @@
 			files = (
 				85A89F551D1C5B14005F5A28 /* ViewController.swift in Sources */,
 				85A89F531D1C5B14005F5A28 /* AppDelegate.swift in Sources */,
+				85A89F731D1C5EB3005F5A28 /* TaxCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
