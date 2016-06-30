@@ -47,8 +47,8 @@ final class TaxCalculator: NSObject {
      Calculates labor credit depends on income and retirement.
      
      - parameters:  
-        - income:    brutto annual salary.
-        - isRetired: indicates if a person is already retired.
+        - income:    Employee's annual income
+        - isRetired: Indicates if a person is already retired.
      
      - returns:
      Calculated labor credit.
@@ -104,6 +104,56 @@ final class TaxCalculator: NSObject {
             else if income < 111590 {
                 result = 1585 - 2.041 * (income - 34015) / 100
             }
+        }
+        
+        return (result)
+    }
+    
+    /**
+     Calculates general credit depends on income and retirement.
+     
+     - parameters: 
+        - income:       Employee's annual income
+        - isRetired:    Indicates if a person is already retired.
+     
+     - returns:
+     Calculates general credit
+     */
+    func generalCredit(income: Double, isRetired: Bool) -> Double {
+        var result: Double = 0
+        
+        /**
+         The calculation for a person who is not retired yet.
+         
+         €0 ......... € 19.922      € 2.242
+         € 19.922 ... € 66.417      € 2.242 - 4,822% x (income - € 19.922)
+         € 66.417 ...........       € 0
+         */
+        
+        if (isRetired == false) {
+            if income < 19922 {
+                result = 2242
+            }
+            else if income < 66417 {
+                result = 2242 - 4.822 * (income - 19922) / 100
+            }
+        }
+        else {
+            
+            /**
+             The calculation for a person who is already retired.
+             
+             €0 ......... € 19.922      € 1.145
+             € 19.922 ... € 66.417      € 1.145 - 2,460% x (belastbaar inkomen uit werk en woning - € 19.922)
+             € 66.417 ...........       € 0
+             */
+            
+            if income < 19922 {
+                result = 1145
+            }
+            else if income < 66417 {
+                result = 1145 - 2.460 * (income - 19922) / 100
+            }    
         }
         
         return (result)
