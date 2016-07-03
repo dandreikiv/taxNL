@@ -14,8 +14,8 @@ typealias TaxLevel = (limit: Double, tax: Double)
 private let maxTax: Double = 52
 
 /**
- *   The calculator makes calculations of net income according to the dutch
- *   tax brackets [for 2016](http://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/boxen_en_tarieven/overzicht_tarieven_en_schijven/u_hebt_in_2016_de_aow_leeftijd_nog_niet_bereikt)
+ The calculator makes calculations of net income according to the dutch
+ tax brackets [for 2016](http://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/boxen_en_tarieven/overzicht_tarieven_en_schijven/u_hebt_in_2016_de_aow_leeftijd_nog_niet_bereikt)
  */
 final class TaxCalculator: NSObject {
 
@@ -46,7 +46,26 @@ final class TaxCalculator: NSObject {
     /**
      Calculates labor credit depends on income and retirement.
      
-     - parameters:  
+     ```
+     The calculation for a person who is not retired yet.
+     
+     €0 ......... € 9.147       1,793%  x income
+     € 9.147  ... € 19.758      € 164 + 27,698% x (income - € 9.147)
+     € 19.758 ... € 34.015      € 3.103
+     € 34.015 ... € 111.590     € 3.103 - 4% x (income - € 34.015)
+     € 111.590 ............     € 0
+     
+     The calculation for a person, who is already retired.
+     
+     €0 ......... € 9.147       0,915%  x income
+     € 9.147  ... € 19.758      € 84 + 14,133% x (income - € 9.147)
+     € 19.758 ... € 34.015      € 1.585
+     € 34.015 ... € 111.590     € 1.585 - 2,041% x (income - € 34.015)
+     € 111.590 ............     € 0
+     
+     ```
+     
+     - parameters:
         - income:    Employee's annual income
         - isRetired: Indicates if a person is already retired.
      
@@ -56,16 +75,7 @@ final class TaxCalculator: NSObject {
     func laborCredit(income: Double, isRetired: Bool) -> Double {
         var result: Double = 0
         
-        /**
-         The calculation for a person who is not retired yet.
-         
-         €0 ......... € 9.147       1,793%  x income
-         € 9.147  ... € 19.758      € 164 + 27,698% x (income - € 9.147)
-         € 19.758 ... € 34.015      € 3.103
-         € 34.015 ... € 111.590     € 3.103 - 4% x (income - € 34.015)
-         € 111.590 ............     € 0
-         */
-
+        /// The calculation for a person who is not retired yet.
         if isRetired == false {
             
             if income < 9147 {
@@ -82,16 +92,8 @@ final class TaxCalculator: NSObject {
             }
         }
         else {
-            /**
-             The calculation for a person who is already retired.
-             
-             €0 ......... € 9.147       0,915%  x income
-             € 9.147  ... € 19.758      € 84 + 14,133% x (income - € 9.147)
-             € 19.758 ... € 34.015      € 1.585
-             € 34.015 ... € 111.590     € 1.585 - 2,041% x (income - € 34.015)
-             € 111.590 ............     € 0
-             */
-            
+        
+            /// The calculation for a person who is already retired.
             if income < 9147 {
                 result = (0.915 * income) / 100
             }
@@ -112,7 +114,22 @@ final class TaxCalculator: NSObject {
     /**
      Calculates general credit depends on income and retirement.
      
-     - parameters: 
+     ```
+     The calculation for a person who is not retired yet.
+     
+     €0 ......... € 19.922      € 2.242
+     € 19.922 ... € 66.417      € 2.242 - 4,822% x (income - € 19.922)
+     € 66.417 ...........       € 0
+     
+     The calculation for a person who is already retired.
+     
+     €0 ......... € 19.922      € 1.145
+     € 19.922 ... € 66.417      € 1.145 - 2,460% x (belastbaar inkomen uit werk en woning - € 19.922)
+     € 66.417 ...........       € 0
+     
+     ```
+     
+     - parameters:
         - income:       Employee's annual income
         - isRetired:    Indicates if a person is already retired.
      
@@ -121,15 +138,8 @@ final class TaxCalculator: NSObject {
      */
     func generalCredit(income: Double, isRetired: Bool) -> Double {
         var result: Double = 0
-        
-        /**
-         The calculation for a person who is not retired yet.
-         
-         €0 ......... € 19.922      € 2.242
-         € 19.922 ... € 66.417      € 2.242 - 4,822% x (income - € 19.922)
-         € 66.417 ...........       € 0
-         */
-        
+    
+        /// The calculation for a person who is not retired yet.
         if (isRetired == false) {
             if income < 19922 {
                 result = 2242
@@ -140,14 +150,7 @@ final class TaxCalculator: NSObject {
         }
         else {
             
-            /**
-             The calculation for a person who is already retired.
-             
-             €0 ......... € 19.922      € 1.145
-             € 19.922 ... € 66.417      € 1.145 - 2,460% x (belastbaar inkomen uit werk en woning - € 19.922)
-             € 66.417 ...........       € 0
-             */
-            
+            /// The calculation for a person who is already retired.
             if income < 19922 {
                 result = 1145
             }
