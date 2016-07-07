@@ -19,6 +19,20 @@ private let maxTax: Double = 52
  */
 final class TaxCalculator: NSObject {
 
+    /**
+     The method calculates income tax.
+     
+     ```
+     Tarieven box 1 (werk en woning) in 2016 AOW-leeftijd nog niet bereikt
+     
+     Schijf     Belastbaar inkomen              Percentage
+     
+     1          t/m   € 19.922                  36,55%  (8.4% + 28.15% AOW)
+     2          Vanaf € 19.923 t/m € 33.715     40,4%   (12.25% + 28.15% AOW)
+     3          Vanaf € 33.716 t/m € 66.421     40,4%
+     4          Vanaf € 66.422                  52%
+     ```
+     */
     func incomeTaxWith(salary: Double, taxLevels: [TaxLevel]) -> Double {
         
         var incomeTax: Double = 0
@@ -41,6 +55,106 @@ final class TaxCalculator: NSObject {
         }
         
         return (incomeTax)
+    }
+    
+    func incomeTaxWith(income: Double) -> Double {
+        
+        let rate1: Double = 36.55
+        let rate2: Double = 40.4
+        let rate3: Double = 40.4
+        let rate4: Double = 52
+        
+        if income < 19992 {
+            return income * rate1 / 100
+        }
+        else if income < 33715 {
+            return (19992 * rate1 / 100) + (income - 19992) * rate2 / 100
+        }
+        else if income < 66421 {
+            return
+                  (19992 * rate1 / 100)
+                + (33715  - 19992) * rate2 / 100
+                + (income - 33715) * rate3 / 100
+        }
+        else {
+            return
+                  (19992 * rate1 / 100)
+                + (33715  - 19992) * rate2 / 100
+                + (66421  - 33715) * rate3 / 100
+                + (income - 66421) * rate4 / 100
+        }
+    }
+    
+    /**
+     The method calcualates General Old Age Pensions **Algemene Ouderdomswet (AOW)**
+     
+     ```
+     Year   AOW's rate
+     2016   17.90%
+     ```
+     - parameters:
+        - income:   taxable income.
+     
+     - returns: 
+     Calculated AOW amount.
+     */
+    func socialSecurityAOW(income: Double) -> Double {
+        
+        var taxableIncome: Double = income
+        
+        if income > 33715 {
+            taxableIncome = 33715
+        }
+        
+        return (taxableIncome * 17.9) / 100
+    }
+    
+    /**
+     The method calcualates **Algemene nabestaandenwet (Anw)**
+     
+     ```
+     Year   Anw's rate
+     2016   0.60%
+     ```
+     - parameters:
+        - income:   taxable income.
+     
+     - returns:
+     Calculated Anw amount.
+     */
+    func socialSecurityANW(income: Double) -> Double {
+        
+        var taxableIncome: Double = income
+        
+        if income > 33715 {
+            taxableIncome = 33715
+        }
+        
+        return (taxableIncome * 0.6) / 100
+    }
+    
+    /**
+     The method calcualates **Wet langdurige zorg (WLZ)**
+     
+     ```
+     Year   WLZ's rate
+     2016   9.65%
+     ```
+     - parameters:
+        - income:   taxable income.
+     
+     - returns:
+     Calculated WLZ amount.
+     */
+    func socialSecurityWLZ(income: Double) -> Double {
+        
+        var taxableIncome: Double = income
+        
+        if income > 33715 {
+            taxableIncome = 33715
+        }
+        
+        return (taxableIncome * 9.65) / 100
     }
     
     /**
